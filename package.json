@@ -5,7 +5,8 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^26.6.0",
-    "ngrok": "^3.3.0"
+    "ngrok": "^3.3.0",
+    "supertest": "^5.0.0"
   },
   "dependencies": {
     "axios": "^0.20.0",
