@@ -1,5 +1,6 @@
 const express = require('express')
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const githubWebhook = require('./github-webhook');
 
 const app = express()
 const port = 3000
@@ -16,14 +17,7 @@ app.post('/slack-webhook', (req, res) => {
 })
 
 app.post('/github-webhook', (req, res) => {
-  let payload
-  if(Object.keys(req.body).length === 1 && undefined !== req.body.payload) {
-    payload = JSON.parse(req.body.payload)
-  } else {
-    payload = req.body
-  }
-  console.log('test',JSON.stringify(payload,null,2))
-  res.send('hi world')
+  githubWebhook(req, res)
 })
 
 app.listen(port, () => {
