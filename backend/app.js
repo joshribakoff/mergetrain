@@ -19,4 +19,9 @@ app.post('/github-webhook', (req, res) => {
   githubWebhook(req, res)
 })
 
+// health check / liveliness probes
+app.get('/', (req, res) => {
+  res.send({})
+})
+
 module.exports = app
