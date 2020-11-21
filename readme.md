@@ -10,11 +10,8 @@ Solution 2: Allow slack channels (public channel, a DM with the bot, etc) to sub
 
 ## Kubernetes & Helm
 
-Install mongo to the cluster:
 
-➜ helm install my-release bitnami/mongodb
-
-Install the bot's application to the cluster:
+Install the bot to the cluster:
 
 ➜ helm install bot backend-chart
 
@@ -25,3 +22,7 @@ Source the environment variable for the mongo `root` password:
 Login to the mongo shell:
 
 ➜ kubectl exec -i pod/my-release-mongodb-7c4c9d7db6-tx469 -- mongo -u root -p $MONGODB_ROOT_PASSWORD
+
+Upgrading:
+
+➜ helm upgrade backend backend-chart --set mongodb.auth.rootPassword=$MONGODB_ROOT_PASSWORD
