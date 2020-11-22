@@ -4,21 +4,22 @@ build:
   local:
     push: false
   artifacts:
-  - image: mergetrain
+  - image: mergetrain-backend
     context: backend
 deploy:
   helm:
     releases:
-    - name: mergetrain
-      chartPath: backend-chart/
+    - name: backend
+      skipBuildDependencies: true
+      chartPath: backend/chart/
       artifactOverrides:
-        image: mergetrain
+        image: mergetrain-backend
         # Skaffold continuously tags your image, so no need to put one here.
       setValueTemplates:
         mongodb.auth.rootPassword: abc123123
 portForward:
 - resourceType: service
-  resourceName: mergetrain-chart
+  resourceName: backend-chart
   port: 80
   # localPort: 9000
 
@@ -30,5 +31,5 @@ profiles:
     local:
       push: true
     artifacts:
-    - image: mergetrain
+    - image: mergetrain-backend
       context: backend
