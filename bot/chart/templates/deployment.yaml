@@ -40,11 +40,11 @@ spec:
           livenessProbe:
             httpGet:
               path: /ping
-              port: http
+              port: 4001
           readinessProbe:
             httpGet:
               path: /ping
-              port: http
+              port: 4001
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
