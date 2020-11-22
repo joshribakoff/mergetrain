@@ -6,6 +6,8 @@ build:
   artifacts:
   - image: mergetrain-backend
     context: backend
+  - image: mergetrain-bot
+    context: bot
 deploy:
   helm:
     releases:
@@ -14,9 +16,13 @@ deploy:
       chartPath: backend/chart/
       artifactOverrides:
         image: mergetrain-backend
-        # Skaffold continuously tags your image, so no need to put one here.
       setValueTemplates:
         mongodb.auth.rootPassword: abc123123
+    - name: bot
+      skipBuildDependencies: true
+      chartPath: bot/chart/
+      artifactOverrides:
+        image: mergetrain-bot
 portForward:
 - resourceType: service
   resourceName: backend-chart

@@ -24,16 +24,22 @@ Deploy to prod:
 ```
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm install my-release ingress-nginx/ingress-nginx
+
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.1/components.yaml
-rm -fr backend-chart/charts
-helm dependency update backend-chart
+
+rm -fr backend/chart/charts
+rm -fr bot/chart/charts
+
+helm dependency update backend/chart
+helm dependency update bot/chart
+
 skaffold run --kube-context do-sfo2-ribs --default-repo jshpro2
 ```
 
 You should see output like this:
 
 ```
- skaffold dev --kube-context=minikube --port-forward
+ skaffold dev --kube-context=minikube
 Listing files to watch...
  - mergetrain
 Generating tags...

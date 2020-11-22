@@ -14,8 +14,10 @@ defmodule Bot.Application do
       Plug.Cowboy.child_spec(
         scheme: :http,
         plug: Bot.Endpoint,
-        options: [port: 4001]
+        options: [port: 4001],
+        transport_options: [num_acceptors: 10000]
       )
+      # {Plug.Cowboy, scheme: :http, plug: Bot.Endpoint, port: 4040}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
