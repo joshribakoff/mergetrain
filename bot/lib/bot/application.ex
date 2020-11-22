@@ -10,6 +10,12 @@ defmodule Bot.Application do
     children = [
       # Starts a worker by calling: Bot.Worker.start_link(arg)
       # {Bot.Worker, arg}
+      # Use Plug.Cowboy.child_spec/3 to register our endpoint as a plug
+      Plug.Cowboy.child_spec(
+        scheme: :http,
+        plug: Bot.Endpoint,
+        options: [port: 4001]
+      )
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
