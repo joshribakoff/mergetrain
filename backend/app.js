@@ -19,9 +19,13 @@ app.post('/github-webhook', (req, res) => {
   githubWebhook(req, res)
 })
 
+var os = require("os");
+var hostname = os.hostname();
+
 // health check / liveliness probes
 app.get('/', (req, res) => {
-  res.send({})
+  console.log('sending hello ' + hostname + ' ' + new Date())
+  res.send({message:'hello world'})
 })
 
 module.exports = app

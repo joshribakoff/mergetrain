@@ -8,21 +8,13 @@ Problem 2: With github CODEOWNERS, notifications can still be quite noisy, you m
 
 Solution 2: Allow slack channels (public channel, a DM with the bot, etc) to subscribe to github targets (teams or users). The bot will maintain a mapping of slack channel ID to github target. When a PR is opened and a team or user is requested to review, the bot will notify all subscribed channels. There should be a way to customize the types of notifications each subscription triggers, for example, subscribing to review requests, mentions, changes requested, comments, merged, failed to merge, etc.
 
-## Kubernetes & Helm
+## Development & Deployment
 
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.1/components.yaml
 
-Install the bot to the cluster:
+rm -fr backend-chart/charts
+helm dependency update backend-chart      
 
-➜ helm install bot backend-chart
+Install skaffold https://skaffold.dev/docs/install/
 
-Source the environment variable for the mongo `root` password:
-
-➜ export MONGODB_ROOT_PASSWORD=$(kubectl get secret --namespace default my-release-mongodb -o jsonpath="{.data.mongodb-root-password}" | base64 --decode)
-
-Login to the mongo shell:
-
-➜ kubectl exec -i pod/my-release-mongodb-7c4c9d7db6-tx469 -- mongo -u root -p $MONGODB_ROOT_PASSWORD
-
-Upgrading:
-
-➜ helm upgrade backend backend-chart --set mongodb.auth.rootPassword=$MONGODB_ROOT_PASSWORD
+➜ skaffold dev --port-forward

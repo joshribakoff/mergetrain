@@ -1,0 +1,34 @@
+apiVersion: skaffold/v2beta9
+kind: Config
+build:
+  local:
+    push: false
+  artifacts:
+  - image: mergetrain
+    context: backend
+deploy:
+  helm:
+    releases:
+    - name: mergetrain
+      chartPath: backend-chart/
+      artifactOverrides:
+        image: mergetrain
+        # Skaffold continuously tags your image, so no need to put one here.
+      setValueTemplates:
+        mongodb.auth.rootPassword: abc123123
+portForward:
+- resourceType: service
+  resourceName: mergetrain-chart
+  port: 80
+  # localPort: 9000
+
+profiles:
+- name: prod
+  activation:
+    - kubeContext: do-sfo2-ribs
+  build:
+    local:
+      push: true
+    artifacts:
+    - image: mergetrain
+      context: backend
